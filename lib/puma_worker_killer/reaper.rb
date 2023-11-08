@@ -26,6 +26,7 @@ module PumaWorkerKiller
           "total=#{total}mb " \
           "master=#{@cluster.master_memory}md " \
           "worker_count=#{@cluster.workers.count} " \
+          "largest_worker_memory=#{@cluster.largest_worker_memory} " \
           "#{@cluster.workers.map { |worker, mem| "worker_#{worker.pid}=#{mem}mb" } * " "}"
       end
 
