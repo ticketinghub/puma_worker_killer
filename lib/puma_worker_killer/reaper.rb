@@ -23,11 +23,11 @@ module PumaWorkerKiller
 
       if @reaper_status_logs
         @cluster.master.log 'PumaWorkerKiller: Status log. ' \
-          "total=#{total}mb " \
-          "master=#{@cluster.master_memory}md " \
+          "total=#{total}MB " \
+          "master=#{@cluster.master_memory}MB " \
           "worker_count=#{@cluster.workers.count} " \
-          "largest_worker_memory=#{@cluster.largest_worker_memory} " \
-          "#{@cluster.workers.map { |worker, mem| "worker_#{worker.pid}=#{mem}mb" } * " "}"
+          "largest_worker_memory=#{@cluster.largest_worker_memory}MB " \
+          "#{@cluster.workers.map { |worker, mem| "worker_#{worker.pid}=#{mem}MB" } * " "}"
       end
 
       kill(total) if total > @max_ram
@@ -37,8 +37,8 @@ module PumaWorkerKiller
 
     def kill(total_mem)
       @cluster.master.log "PumaWorkerKiller: Out of memory. #{@cluster.workers.count} " \
-        "workers and master consuming total: #{total_mem} mb out of max: #{@max_ram} mb. " \
-        "Sending TERM to pid #{@cluster.largest_worker.pid} consuming #{@cluster.largest_worker_memory} mb."
+        "workers and master consuming total: #{total_mem} MB out of max: #{@max_ram} MB. " \
+        "Sending TERM to pid #{@cluster.largest_worker.pid} consuming #{@cluster.largest_worker_memory} MB."
 
       # Fetch the largest_worker so that both `@pre_term` and `term_worker` are called with the same worker
       # Avoids a race condition where:
